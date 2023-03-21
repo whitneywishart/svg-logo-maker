@@ -4,7 +4,6 @@ const fs = require('fs');
 const { Circle } = require('./lib/circle-class.js');
 const { Square } = require('./lib/square-class.js');
 const { Triangle } = require('./lib/triangle-class.js');
-const { generateText, generateShape } = require('./lib/make-shape');
 
 // Logo properties questions
 inquirer
@@ -20,7 +19,7 @@ inquirer
             name: 'textcolor',
         },
         {
-            type: 'checkbox',
+            type: 'list',
             message: 'What shape should your logo be? Please choose circle, triangle or square.',
             name: 'shapechoice',
             choices: ['Circle', 'Triangle', 'Square'],
@@ -33,12 +32,20 @@ inquirer
         },
     ])
 
-
     .then((res) => {
-        console.log(res);
         const svgDestination = './dist/logo.svg';
+        console.log(res);
 
-        fs.writeFile(svgDestination, res, (err) =>
-            err ? console.log(err) : console.log('Logo generated')
+        let shape;
+        if (res.shapechoice === 'Circle') {
+            shape = new Circle(res.logotext, res.textcolor, res.shapecolor);
+        } else if (res.shapechoice === 'Triangle') {
+            shape = new Triangle(res.logotext, res.textcolor, res.shapecolor);
+        } else if (res.shapechoice === 'Square') {
+            shape = new Square(res.logotext, res.textcolor, res.shapecolor);
+        }
+
+        fs.writeFile(svgDestination, shape.render(), (err) =>
+            err ? console.log(err) : console.log('Generated logo.svg')
         );
     });
