@@ -1,7 +1,10 @@
 // Required references
 const inquirer = require('inquirer');
 const fs = require('fs');
-
+const { Circle } = require('./lib/circle-class.js');
+const { Square } = require('./lib/square-class.js');
+const { Triangle } = require('./lib/triangle-class.js');
+const { generateText, generateShape } = require('./lib/make-shape');
 
 // Logo properties questions
 inquirer
@@ -13,13 +16,13 @@ inquirer
         },
         {
             type: 'input',
-            message: 'What color text would you like? Please enter a color keyword or hexadecimal code.',
+            message: 'What color text would you like? Please enter a color name or hexadecimal code.',
             name: 'textcolor',
         },
         {
             type: 'checkbox',
             message: 'What shape should your logo be? Please choose circle, triangle or square.',
-            name: 'chosenshape',
+            name: 'shapechoice',
             choices: ['Circle', 'Triangle', 'Square'],
 
         },
@@ -30,14 +33,12 @@ inquirer
         },
     ])
 
-    .then((data) => {
+
+    .then((res) => {
+        console.log(res);
         const svgDestination = './dist/logo.svg';
-        const generatedLogo = generateShape(data);
 
-
-        // Generate logo
-        fs.writeFile(svgDestination, generateSvg(generatedLogo)), (err) =>
-            err ? console.log(err) : console.log('Your SVG logo has been generated.')
-    })
-
-    .catch((err) => console.error(err));
+        fs.writeFile(svgDestination, res, (err) =>
+            err ? console.log(err) : console.log('Logo generated')
+        );
+    });
