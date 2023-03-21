@@ -32,7 +32,7 @@ inquirer
             type: 'list',
             message: 'What shape should your logo be? Please choose circle, triangle or square.',
             name: 'shapechoice',
-            choices: ['Circle', 'Triangle', 'Square'],
+            choices: ['Circle', 'Square', 'Triangle'],
 
         },
         {
