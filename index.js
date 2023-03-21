@@ -5,6 +5,15 @@ const { Circle } = require('./lib/circle-class.js');
 const { Square } = require('./lib/square-class.js');
 const { Triangle } = require('./lib/triangle-class.js');
 
+// Limit text chars
+const limitChars = function (input) {
+    if (input.length > 3) {
+        return 'Please do not enter more than 3 characters'
+    } else {
+        return true;
+    }
+}
+
 // Logo properties questions
 inquirer
     .prompt([
@@ -12,6 +21,7 @@ inquirer
             type: 'input',
             message: 'What text should be displayed on your logo? Please enter up to 3 characters.',
             name: 'logotext',
+            validate: limitChars,
         },
         {
             type: 'input',
